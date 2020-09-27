@@ -1,11 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import LoginView from "./Login";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to EarnFit app!</Text>
-    </View>
+    <LoginView></LoginView>
   );
 }
 
