@@ -2,7 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import LoginView from "./Login";
 
 function HomeScreen() {
@@ -52,23 +56,38 @@ export default function App() {
             let iconName;
 
             if (route.name === "Earnfit") {
-              iconName = "home";
+              return <AntDesign name="home" size={24} color="#ef820d" />;
             } else if (route.name === "Earnings") {
-              iconName = "wallet";
+              return (
+                <MaterialCommunityIcons
+                  name="currency-inr"
+                  size={24}
+                  color="#ef820d"
+                />
+              );
             } else if (route.name === "Account") {
-              iconName = "idcard";
+              return (
+                <MaterialCommunityIcons
+                  name="account"
+                  size={24}
+                  color="#ef820d"
+                />
+              );
             } else if (route.name === "Plans") {
-              iconName = "form";
+              return <AntDesign name="form" size={24} color="#ef820d" />;
             } else if (route.name === "Fitness") {
-              iconName = "team";
+              return (
+                <MaterialIcons
+                  name="fitness-center"
+                  size={24}
+                  color="#ef820d"
+                />
+              );
             }
-
-            // You can return any component that you like here!
-            return <AntDesign name={iconName} size={24} color="#F89221" />;
           },
         })}
         tabBarOptions={{
-          activeTintColor: "green",
+          activeTintColor: "#ef820d",
           inactiveTintColor: "gray",
         }}
       >

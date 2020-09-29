@@ -85,15 +85,9 @@ export default class LoginView extends Component {
       <View style={styles.container}>
         {/* Move tile to a different component */}
         <TouchableOpacity style={styles.card}>
-          <Image style={styles.cardImage} source={require("./Logo2.jpg")} />
+          <Image style={styles.cardImage} source={require("./Logo4.png")} />
         </TouchableOpacity>
         <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
           <TextInput
             style={styles.inputs}
             placeholder="Username"
@@ -106,12 +100,6 @@ export default class LoginView extends Component {
         </View>
 
         <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/key-2/ultraviolet/50/3498db",
-            }}
-          />
           <TextInput
             style={styles.inputs}
             placeholder="Password"
@@ -151,12 +139,14 @@ export default class LoginView extends Component {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
-    marginBottom: 10,
-    width: "50%",
+    marginBottom: 45,
+    width: "100%",
     height: "30%",
     shadowColor: "#000",
     borderRadius: 5,
-    shadowOpacity: 0.2,
+    borderColor: "lightgray",
+    borderWidth: 2,
+    shadowOpacity: 0.5,
     shadowRadius: 3,
     shadowOffset: {
       width: 3,
@@ -179,26 +169,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F89221",
+    backgroundColor: "#FFF",
   },
   inputContainer: {
     backgroundColor: "#FFF",
-    borderRadius: 30,
-    borderWidth: 0,
-    width: 250,
-    height: 45,
     marginBottom: 20,
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "center",
   },
   inputs: {
     height: 45,
-    marginLeft: 16,
+    width: "50%",
     textAlignVertical: "top",
-    paddingTop: 0,
-    paddingBottom: 0,
-    borderWidth: 0,
+    alignSelf: "center",
+    borderRadius: 35,
     flex: 1,
+    textAlign: "center",
+    borderColor: "darkgray",
+    borderBottomWidth: 1,
   },
   inputIcon: {
     width: "60px",
@@ -214,9 +202,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
+    alignSelf: "center",
   },
   loginButton: {
-    backgroundColor: "#008F11",
+    backgroundColor: "#ef820d",
   },
   loginText: {
     color: "#FFF",
