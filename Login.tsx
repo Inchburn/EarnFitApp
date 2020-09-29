@@ -90,7 +90,7 @@ export default class LoginView extends Component {
 
         {/* Move tile to a different component */}
         <TouchableOpacity style={styles.card}>
-            <Image style={styles.cardImage} source={require('C:/Users/anusha.inuganti/Documents/GitHub/EarnFitApp/Logo.JPG')}/>
+            <Image style={styles.cardImage} source={require('C:/Users/anusha.inuganti/Documents/GitHub/EarnFitApp/Logo2.JPG')}/>
         </TouchableOpacity>
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
