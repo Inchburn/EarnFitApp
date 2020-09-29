@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
+import LoginView from "./Login";
 
 function HomeScreen() {
   return (
@@ -12,7 +13,7 @@ function HomeScreen() {
   );
 }
 
-function WalletScreen() {
+function EarningsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <AntDesign name="wallet" size={24} color="black" />
@@ -21,9 +22,21 @@ function WalletScreen() {
 }
 
 function AccountScreen() {
+  return <LoginView></LoginView>;
+}
+
+function PlansScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <AntDesign name="idcard" size={24} color="black" />
+      <AntDesign name="form" size={24} color="black" />
+    </View>
+  );
+}
+
+function FitnessScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <AntDesign name="team" size={24} color="black" />
     </View>
   );
 }
@@ -38,25 +51,31 @@ export default function App() {
           tabBarIcon: () => {
             let iconName;
 
-            if (route.name === "Home") {
+            if (route.name === "Earnfit") {
               iconName = "home";
-            } else if (route.name === "Wallet") {
+            } else if (route.name === "Earnings") {
               iconName = "wallet";
             } else if (route.name === "Account") {
               iconName = "idcard";
+            } else if (route.name === "Plans") {
+              iconName = "form";
+            } else if (route.name === "Fitness") {
+              iconName = "team";
             }
 
             // You can return any component that you like here!
-            return <AntDesign name={iconName} size={24} color="black" />;
+            return <AntDesign name={iconName} size={24} color="#F89221" />;
           },
         })}
         tabBarOptions={{
-          activeTintColor: "teal",
+          activeTintColor: "green",
           inactiveTintColor: "gray",
         }}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Wallet" component={WalletScreen} />
+        <Tab.Screen name="Earnfit" component={HomeScreen} />
+        <Tab.Screen name="Fitness" component={FitnessScreen} />
+        <Tab.Screen name="Earnings" component={EarningsScreen} />
+        <Tab.Screen name="Plans" component={PlansScreen} />
         <Tab.Screen name="Account" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>

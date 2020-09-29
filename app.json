@@ -2,8 +2,8 @@
   "name": "EarnFitApp",
   "displayName": "EarnFitApp",
   "expo": {
-    "name": "EarnFitApp",
-    "slug": "EarnFitApp",
+    "name": "EarnFitApp1",
+    "slug": "earnfitapp1",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
