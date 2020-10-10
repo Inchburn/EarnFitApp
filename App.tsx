@@ -14,7 +14,7 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import LoginView from "./Login";
+import LoginView from "./components/Login";
 
 function HomeScreen() {
   return (

@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { Image } from "react-native";
+import RegisterUser from "./Register";
 export default class LoginView extends Component {
   [x: string]: any;
 
@@ -18,11 +19,16 @@ export default class LoginView extends Component {
     this.state = {
       Username: "",
       password: "",
+      isLogin: true,
     };
   }
   onClickListener = (viewId) => {
-    alert("this" + viewId);
-    if (viewId == "login") {
+    if (viewId === "register") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    if (viewId === "login") {
       //Calling Post api endpoint
       fetch("http://localhost:3001/Users/Authenticate", {
         method: "POST",
@@ -81,11 +87,11 @@ export default class LoginView extends Component {
   //   }
 
   render() {
-    return (
+    return this.state.isLogin ? (
       <View style={styles.container}>
         {/* Move tile to a different component */}
         <TouchableOpacity style={styles.card}>
-          <Image style={styles.cardImage} source={require("./Logo4.png")} />
+          <Image style={styles.cardImage} source={require("../Logo4.png")} />
         </TouchableOpacity>
         <View style={styles.inputContainer}>
           <TextInput
@@ -132,6 +138,8 @@ export default class LoginView extends Component {
           <Text style={styles.RegisterText}>Register</Text>
         </TouchableHighlight>
       </View>
+    ) : (
+      <RegisterUser></RegisterUser>
     );
   }
 }
