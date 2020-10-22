@@ -1,12 +1,7 @@
-import React, { constructor, Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import React, { Component } from "react";
+import { Notifications } from "expo";
+import { StyleSheet, View, Image } from "react-native";
+import * as Permissions from "expo-permissions";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -59,8 +54,62 @@ export default class App extends Component {
     super();
     this.state = {
       isVisible: true,
+      userToken: "",
     };
   }
+
+  UNSAFE_componentWillMount() {
+    this.getPushNotificationPermissions();
+  }
+
+  sendPushNotification = () => {
+    // I got the user that we will send the push notification to from the database and set it to state, now I have access to the users push token.
+    const userExpoToken = this.state.userToken;
+    let response = fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: userExpoToken,
+        sound: "default",
+        title: "EarnFit push notification",
+        body: "Test Notification",
+      }),
+    });
+    // Now we will send the message to the expo servers
+  };
+
+  getPushNotificationPermissions = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== "granted") {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== "granted") {
+      return;
+    }
+    console.log(finalStatus);
+    let userToken = await Notifications.getExpoPushTokenAsync();
+    // Get the token that uniquely identifies this device
+    console.log(
+      "Notification Token: ",
+      this.setState({ userToken: userToken })
+    );
+
+    this.sendPushNotification();
+  };
 
   Hide_Splash_Screen = () => {
     this.setState({
@@ -81,8 +130,6 @@ export default class App extends Component {
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: () => {
-              let iconName;
-
               if (route.name === "Earnfit") {
                 return <AntDesign name="home" size={24} color="#ef820d" />;
               } else if (route.name === "Earnings") {
@@ -130,10 +177,7 @@ export default class App extends Component {
       <View style={styles.SplashScreen_RootView}>
         <View style={styles.SplashScreen_ChildView}>
           <Image
-            source={{
-              uri:
-                "https://static.javatpoint.com/tutorial/react-native/images/react-native-tutorial.png",
-            }}
+            source={require("./Splashscreen.jpg")}
             style={{ width: "100%", height: "100%", resizeMode: "contain" }}
           />
         </View>
@@ -161,7 +205,7 @@ const styles = StyleSheet.create({
   SplashScreen_ChildView: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00BCD4",
+    backgroundColor: "#FFF",
     flex: 1,
   },
 });

@@ -116,26 +116,26 @@ export default class LoginView extends Component {
         </View>
 
         <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
+          style={[styles.buttonContainer]}
           onPress={() => {
             this.onClickListener("login");
           }}
         >
-          <Text style={styles.loginText}>Login</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
 
         <TouchableHighlight
           style={styles.buttonContainer}
           onPress={() => this.onClickListener("restore_password")}
         >
-          <Text style={styles.RegisterText}>Forgot your password?</Text>
+          <Text style={styles.buttonText}>Forgot your password?</Text>
         </TouchableHighlight>
 
         <TouchableHighlight
-          style={styles.buttonContainer}
+          style={[styles.buttonContainer, styles.registerLink]}
           onPress={() => this.onClickListener("register")}
         >
-          <Text style={styles.RegisterText}>Register</Text>
+          <Text style={styles.registerLinkText}>Register</Text>
         </TouchableHighlight>
       </View>
     ) : (
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: "row",
     justifyContent: "center",
+    alignSelf: "center",
   },
   inputs: {
     height: 45,
@@ -211,14 +212,16 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 30,
     alignSelf: "center",
-  },
-  loginButton: {
     backgroundColor: "#ef820d",
   },
-  loginText: {
+  buttonText: {
     color: "#FFF",
   },
-  RegisterText: {
-    color: "black",
+  registerLink: {
+    backgroundColor: "white",
+  },
+  registerLinkText: {
+    color: "blue",
+    textDecorationLine: "underline",
   },
 });

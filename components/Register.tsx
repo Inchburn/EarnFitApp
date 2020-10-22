@@ -213,7 +213,7 @@ export default class RegisterUser extends Component {
         </View>
 
         <TouchableHighlight
-          style={[styles.buttonContainer, styles.loginButton]}
+          style={[styles.buttonContainer, styles.registerButton]}
           onPress={() => {
             this.onClickListener("register");
           }}
@@ -257,24 +257,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "#FFF",
   },
   inputContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    width: 250,
-    height: 45,
+    backgroundColor: "#FFF",
     marginBottom: 20,
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "center",
   },
   inputs: {
     height: 45,
-    marginLeft: 16,
-    borderBottomColor: "#FFFFFF",
+    width: "50%",
+    textAlignVertical: "top",
+    alignSelf: "center",
+    borderRadius: 35,
     flex: 1,
+    textAlign: "center",
+    borderColor: "darkgray",
+    borderBottomWidth: 1,
   },
   inputIcon: {
     width: 30,
@@ -290,9 +290,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
+    alignSelf: "center",
   },
-  loginButton: {
-    backgroundColor: "#00b5ec",
+  registerButton: {
+    backgroundColor: "#ef820d",
   },
   loginText: {
     color: "white",
