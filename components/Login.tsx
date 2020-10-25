@@ -10,7 +10,8 @@ import {
   Alert,
 } from "react-native";
 import { Image } from "react-native";
-import RegisterUser from "./Register";
+import RegistrationWizard from "./Register";
+import HomeView from "./Home";
 export default class LoginView extends Component {
   [x: string]: any;
 
@@ -20,8 +21,27 @@ export default class LoginView extends Component {
       Username: "",
       password: "",
       isLogin: true,
+      redirectToHome: false,
+
+      registration: {
+        currentStep: 1,
+        mobileNumber: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        userName: "",
+        password: "",
+        confirmPassword: "",
+      },
     };
   }
+
+  onSubmit = () => {
+    this.setState({
+      redirectToHome: true,
+    });
+  };
+
   onClickListener = (viewId) => {
     if (viewId === "register") {
       this.setState({
@@ -30,26 +50,26 @@ export default class LoginView extends Component {
     }
     if (viewId === "login") {
       //Calling Post api endpoint
-      fetch("http://localhost:3001/Users/Authenticate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          userNm: this.state.Username,
-          userPwd: this.state.password,
-        }),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          alert("bae");
-          alert("hi" + JSON.stringify(response));
-        })
-        .catch((error) => alert("Error " + error));
-      alert("Button pressed " + this.state.Username);
+      // fetch("http://localhost:3001/Users/Authenticate", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Access-Control-Allow-Origin": "*",
+      //   },
+      //   body: JSON.stringify({
+      //     userNm: this.state.Username,
+      //     userPwd: this.state.password,
+      //   }),
+      // })
+      //   .then((response) => {
+      //     return response.json();
+      //   })
+      //   .then((response) => {
+      //     alert("bae");
+      //     alert("hi" + JSON.stringify(response));
+      //   })
+      //   .catch((error) => alert("Error " + error));
+      // alert("Button pressed " + this.state.Username);
     }
 
     //Calling get api endpoint
@@ -87,64 +107,231 @@ export default class LoginView extends Component {
   //   }
 
   render() {
-    return this.state.isLogin ? (
-      <View style={styles.container}>
-        {/* Move tile to a different component */}
-        <TouchableOpacity style={styles.card}>
-          <Image style={styles.cardImage} source={require("../Logo4.png")} />
-        </TouchableOpacity>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Username"
-            keyboardType="default"
-            underlineColorAndroid="transparent"
-            onChangeText={(Username) => {
-              this.setState({ Username });
+    return !this.state.redirectToHome ? (
+      this.state.isLogin ? (
+        <View style={styles.container}>
+          {/* Move tile to a different component */}
+          <TouchableOpacity style={styles.card}>
+            <Image style={styles.cardImage} source={require("../Logo4.png")} />
+          </TouchableOpacity>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Username"
+              keyboardType="default"
+              underlineColorAndroid="transparent"
+              onChangeText={(Username) => {
+                this.setState({ Username });
+              }}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Password"
+              secureTextEntry={true}
+              underlineColorAndroid="transparent"
+              onChangeText={(password) => this.setState({ password })}
+            />
+          </View>
+
+          <TouchableHighlight
+            style={[styles.buttonContainer]}
+            onPress={() => {
+              this.onClickListener("login");
             }}
-          />
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.buttonContainer}
+            onPress={() => this.onClickListener("restore_password")}
+          >
+            <Text style={styles.buttonText}>Forgot your password?</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={[styles.buttonContainer, styles.registerLink]}
+            onPress={() => this.onClickListener("register")}
+          >
+            <Text style={styles.registerLinkText}>Register</Text>
+          </TouchableHighlight>
         </View>
+      ) : (
+        <View style={styles.container}>
+          <RegistrationWizard>
+            <RegistrationWizard.Step>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Mobile Number"
+                  keyboardType="numeric"
+                  underlineColorAndroid="transparent"
+                  onChangeText={(mobileNumber) =>
+                    this.setState({
+                      registration: {
+                        mobileNumber: mobileNumber,
+                      },
+                    })
+                  }
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Firstname"
+                  keyboardType="default"
+                  underlineColorAndroid="transparent"
+                  onChangeText={(firstName) =>
+                    this.setState({
+                      registration: {
+                        firstName: firstName,
+                      },
+                    })
+                  }
+                />
+              </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Password"
-            secureTextEntry={true}
-            underlineColorAndroid="transparent"
-            onChangeText={(password) => this.setState({ password })}
-          />
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputs}
+                  placeholder="Lastname"
+                  keyboardType="default"
+                  underlineColorAndroid="transparent"
+                  onChangeText={(lastName) =>
+                    this.setState({
+                      registration: {
+                        lastName,
+                      },
+                    })
+                  }
+                />
+              </View>
+            </RegistrationWizard.Step>
+            <RegistrationWizard.Step>
+              <View style={styles.container}>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Email (Optional)"
+                    keyboardType="email-address"
+                    underlineColorAndroid="transparent"
+                    onChangeText={(email) =>
+                      this.setState({
+                        registration: {
+                          email,
+                        },
+                      })
+                    }
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Age"
+                    keyboardType="numeric"
+                    underlineColorAndroid="transparent"
+                    onChangeText={(age) =>
+                      this.setState({
+                        registration: {
+                          age,
+                        },
+                      })
+                    }
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Height(in cms)"
+                    keyboardType="numeric"
+                    underlineColorAndroid="transparent"
+                    onChangeText={(height) =>
+                      this.setState({
+                        registration: {
+                          height,
+                        },
+                      })
+                    }
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Weight(in Kgs)"
+                    keyboardType="numeric"
+                    underlineColorAndroid="transparent"
+                    onChangeText={(weight) =>
+                      this.setState({
+                        registration: {
+                          weight,
+                        },
+                      })
+                    }
+                  />
+                </View>
+              </View>
+            </RegistrationWizard.Step>
+            <RegistrationWizard.Step onSubmit={this.onSubmit}>
+              <View style={styles.container}>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Password"
+                    secureTextEntry={true}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(password) =>
+                      this.setState({
+                        registration: {
+                          password,
+                        },
+                      })
+                    }
+                  />
+                </View>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    placeholder="Confirm Password"
+                    secureTextEntry={true}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(confirmPassword) =>
+                      this.setState({
+                        registration: {
+                          confirmPassword,
+                        },
+                      })
+                    }
+                  />
+                </View>
+              </View>
+            </RegistrationWizard.Step>
+          </RegistrationWizard>
         </View>
-
-        <TouchableHighlight
-          style={[styles.buttonContainer]}
-          onPress={() => {
-            this.onClickListener("login");
-          }}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          style={styles.buttonContainer}
-          onPress={() => this.onClickListener("restore_password")}
-        >
-          <Text style={styles.buttonText}>Forgot your password?</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.registerLink]}
-          onPress={() => this.onClickListener("register")}
-        >
-          <Text style={styles.registerLinkText}>Register</Text>
-        </TouchableHighlight>
-      </View>
+      )
     ) : (
-      <RegisterUser></RegisterUser>
+      <HomeView></HomeView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  stepContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFF",
+  },
+  // inputs: {
+  //   height: 45,
+  //   marginLeft: 16,
+  //   borderBottomColor: "#FFFFFF",
+  //   flex: 1,
+  // },
   card: {
     backgroundColor: "#fff",
     marginBottom: 45,
@@ -188,7 +375,7 @@ const styles = StyleSheet.create({
   },
   inputs: {
     height: 45,
-    width: "50%",
+    width: "100%",
     textAlignVertical: "top",
     alignSelf: "center",
     borderRadius: 35,

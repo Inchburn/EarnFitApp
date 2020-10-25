@@ -1,301 +1,133 @@
-import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableHighlight,
-  Image,
-} from "react-native";
-// import RadioForm from "react-native-simple-radio-button";
+import React, { PureComponent } from "react";
+import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 
-export default class RegisterUser extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  onClickListener = () => {
-    //Calling get api endpoint
-    fetch("http://192.168.0.103:3001/Users/Insert", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        userNm: this.state.Username,
-        userPwd: this.state.password,
-        emailAddrss: this.state.Email,
-        mobNum: this.state.MobileNumber,
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        alert("hi" + JSON.stringify(response));
-      })
-      .catch((error) => alert("Error " + error));
-    alert("Button  register " + this.state.Username);
+class Step extends PureComponent {
+  state = {
+    showSubmit: false,
   };
-
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Mobile Number"
-            keyboardType="default"
-            underlineColorAndroid="transparent"
-            onChangeText={(Username) => {
-              this.setState({ Username });
-            }}
-          />
-        </View>
+        {this.props.children}
 
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Firstname"
-            keyboardType="default"
-            underlineColorAndroid="transparent"
-            onChangeText={(Firstname) => {
-              this.setState({ Firstname });
-            }}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Lastname"
-            keyboardType="default"
-            underlineColorAndroid="transparent"
-            onChangeText={(Lastname) => {
-              this.setState({ Lastname });
-            }}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Email (Optional)"
-            keyboardType="email-address"
-            underlineColorAndroid="transparent"
-            onChangeText={(Email) => {
-              this.setState({ Email });
-            }}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Age"
-            keyboardType="numeric"
-            underlineColorAndroid="transparent"
-            onChangeText={(Age) => {
-              this.setState({ Age });
-            }}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Height(in cms)"
-            keyboardType="numeric"
-            underlineColorAndroid="transparent"
-            onChangeText={(Height) => {
-              this.setState({ Height });
-            }}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/message/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Weight(in Kgs)"
-            keyboardType="numeric"
-            underlineColorAndroid="transparent"
-            onChangeText={(Weight) => {
-              this.setState({ Weight });
-            }}
-          />
-        </View>
-
-        <Text style={styles.loginText}>Workout History</Text>
-
-        {/* <View style={styles.inputContainer}>
-          <RadioForm
-            radio_props={radio_props}
-            initial={0}
-            onPress={(value) => {
-              this.setState({ value: value });
-            }}
-          />
-        </View> */}
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/key-2/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Password"
-            secureTextEntry={true}
-            underlineColorAndroid="transparent"
-            onChangeText={(password) => this.setState({ password })}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://png.icons8.com/key-2/ultraviolet/50/3498db",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Confirm Password"
-            secureTextEntry={true}
-            underlineColorAndroid="transparent"
-            onChangeText={(cpassword) => this.setState({ cpassword })}
-          />
-        </View>
-
-        <TouchableHighlight
-          style={[styles.buttonContainer, styles.registerButton]}
-          onPress={() => {
-            this.onClickListener("register");
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <Text style={styles.loginText}>Register</Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            style={[
+              styles.buttonContainer,
+              {
+                backgroundColor:
+                  this.props.currentIndex === 0 ? "#BEBEBE" : "#ef820d",
+              },
+            ]}
+            disabled={this.props.currentIndex === 0}
+            onPress={() => {
+              this.props.previousStep();
+            }}
+          >
+            <Text style={styles.buttonText}>Prev</Text>
+          </TouchableHighlight>
+          {!this.props.isLast ? (
+            <TouchableHighlight
+              style={[
+                styles.buttonContainer,
+                {
+                  backgroundColor: this.props.isLast ? "#BEBEBE" : "#ef820d",
+                },
+              ]}
+              onPress={() => {
+                this.props.nextStep();
+              }}
+            >
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableHighlight>
+          ) : (
+            <TouchableHighlight
+              style={[styles.buttonContainer]}
+              onPress={() => {
+                this.props.onSubmit();
+              }}
+            >
+              <Text style={styles.buttonText}>Submit</Text>
+            </TouchableHighlight>
+          )}
+        </View>
       </View>
     );
   }
 }
 
+class RegistrationWizard extends PureComponent {
+  static Step = (props) => <Step {...props} />;
+  state = {
+    index: 0,
+  };
+
+  _nextStep = () => {
+    if (this.state.index != this.props.children.length - 1) {
+      this.setState((prevState) => ({
+        index: prevState.index + 1,
+      }));
+    }
+  };
+
+  _previousStep = () => {
+    if (this.state.index != 0) {
+      this.setState((prevState) => ({
+        index: prevState.index - 1,
+      }));
+    }
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {React.Children.map(this.props.children, (el, index) => {
+          if (index === this.state.index) {
+            return React.cloneElement(el, {
+              currentIndex: this.state.index,
+              nextStep: this._nextStep,
+              previousStep: this._previousStep,
+              isLast: this.state.index === this.props.children.length - 1,
+            });
+          }
+
+          return null;
+        })}
+      </View>
+    );
+  }
+}
+
+export default RegistrationWizard;
+
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#fff",
-    marginBottom: 10,
-    marginLeft: "2%",
-    width: "45%",
-    height: "30%",
-    shadowColor: "#000",
-    borderRadius: 5,
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-  },
-  cardImage: {
-    marginTop: "1%",
+  buttonContainer: {
+    flex: 1,
+    height: 45,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 5,
     width: "100%",
-    height: "80%",
-    resizeMode: "cover",
+    borderRadius: 30,
+    alignSelf: "center",
+    backgroundColor: "#ef820d",
   },
-  cardText: {
-    color: "#a9a9a9",
-    fontSize: 12,
-    height: "10%",
-    paddingLeft: 15,
+  buttonText: {
+    color: "#FFF",
   },
   container: {
     flex: 1,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#FFF",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFF",
-  },
-  inputContainer: {
-    backgroundColor: "#FFF",
-    marginBottom: 20,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  inputs: {
-    height: 45,
-    width: "50%",
-    textAlignVertical: "top",
-    alignSelf: "center",
-    borderRadius: 35,
-    flex: 1,
-    textAlign: "center",
-    borderColor: "darkgray",
-    borderBottomWidth: 1,
-  },
-  inputIcon: {
-    width: 30,
-    height: 30,
-    marginLeft: 15,
-    justifyContent: "center",
-  },
-  buttonContainer: {
-    height: 45,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-    width: 250,
-    borderRadius: 30,
-    alignSelf: "center",
-  },
-  registerButton: {
-    backgroundColor: "#ef820d",
-  },
-  loginText: {
-    color: "white",
   },
 });

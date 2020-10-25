@@ -10,13 +10,10 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import LoginView from "./components/Login";
+import HomeView from "./components/Home";
 
 function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <AntDesign name="home" size={24} color="black" />
-    </View>
-  );
+  return <HomeView></HomeView>;
 }
 
 function EarningsScreen() {
